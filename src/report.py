@@ -16,17 +16,20 @@ def add_to_activity_report():
   book = openpyxl.load_workbook(fileName)
   sheet = book.active
 
-  i = 8
+  row = 8
   flag = True
 
   while flag:
-    value = sheet.cell(row=i, column=1).value
+    value = sheet.cell(row=row, column=1).value
     if value == None or value == '日付': flag = False
-    else: i += 1
+    else: row += 1
 
   with open('tmp.json', 'r') as f:
     data = json.load(f)
-    sheet.cell(row=i, column=1).value = data.get('day')
+    sheet.cell(row=row, column=1).value = data.get('day')
+    sheet.cell(row=row, column=3).value = data.get('body')
+    sheet.cell(row=row, column=11).value = data.get('classroom')
+    sheet.cell(row=row, column=14).value = len(data.get('students'))
 
   book.save(fileName)
 
