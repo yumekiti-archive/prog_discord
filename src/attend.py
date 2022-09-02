@@ -1,9 +1,10 @@
 import os
 import json
+from datetime import datetime
 
 async def add():
   data = {
-    'date': '01-01',
+    'day': '{0:%d}'.format(datetime.now()),
     "classroom": "2200",
     "body": "This is a test message",
     "students": [],
@@ -28,3 +29,7 @@ async def add():
 async def delete():
   if os.path.exists('tmp.json'):
     os.remove('tmp.json')
+
+if __name__ == '__main__':
+  import asyncio
+  asyncio.run(add())

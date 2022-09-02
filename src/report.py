@@ -1,7 +1,19 @@
 import openpyxl
+from datetime import datetime
+import os
+import shutil
+import json
+
+def init(fileName):
+  shutil.copy('report.xlsx', fileName)
 
 def add_to_activity_report():
-  book = openpyxl.load_workbook('report.xlsx')
+  fileName = f'output/{datetime.now().strftime("%Y_%m")}.xlsx'
+
+  if not os.path.exists(fileName):
+    init(fileName)
+
+  book = openpyxl.load_workbook(fileName)
   sheet = book.active
 
   i = 8
@@ -12,9 +24,11 @@ def add_to_activity_report():
     if value == None or value == '日付': flag = False
     else: i += 1
 
-  sheet.cell(row=i, column=1).value = 'Total'
+  with open('tmp.json', 'r') as f:
+    data = json.load(f)
+    sheet.cell(row=i, column=1).value = data.get('day')
 
-  book.save('report.xlsx')
+  book.save(fileName)
 
 if __name__ == '__main__':
   add_to_activity_report()
