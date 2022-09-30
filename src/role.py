@@ -1,13 +1,13 @@
 import discord
 
 roles = {
-  '1️⃣': '１年生',
+  '1️⃣': '1_year',
   '2️⃣': '2_year',
   '3️⃣': '3_year',
   '4️⃣': '4_year',
 }
 
-async def join(client, message):
+async def main(client, message):
   for emoji in roles.keys():
     await message.add_reaction(emoji)
 
@@ -17,7 +17,7 @@ async def join(client, message):
   try:
     reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
   except asyncio.TimeoutError:
-    await message.channel.send('タイムアウトしました')
+    await message.channel.send('timeout')
   else:
     role = discord.utils.get(message.guild.roles, name=roles[str(reaction.emoji)])
     await message.author.add_roles(role)
@@ -26,7 +26,7 @@ async def join(client, message):
       if r.name in roles.values() and r.name != roles[str(reaction.emoji)]:
         await message.author.remove_roles(r)
 
-    await message.channel.send(f'{message.author.mention} に {role.name} を付与しました')
+    await message.channel.send(f'{message.author.mention} has joined {role.name}')
     await message.clear_reactions()
 
 if __name__ == '__main__':
