@@ -3,6 +3,9 @@
 import discord
 import role
 
+from dotenv import load_dotenv
+load_dotenv()
+
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -20,4 +23,4 @@ async def on_message(message):
   if message.content.startswith('/role'):
     await role.main(client, message)
 
-client.run('MTAyNTIwNTk1MDE0OTMwMDIzNA.GJDt5G.PwoPboXiOlFe6ayLS_ik1o2PT6ZgykN81gEBsQ')
+client.run(os.getenv('TOKEN'))
