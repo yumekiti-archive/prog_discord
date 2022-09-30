@@ -7,7 +7,7 @@ roles = {
   '4️⃣': '4_year',
 }
 
-async def main(client, message):
+async def on_member_join(client, message):
   for emoji in roles.keys():
     await message.add_reaction(emoji)
 
@@ -21,6 +21,11 @@ async def main(client, message):
   else:
     role = discord.utils.get(message.guild.roles, name=roles[str(reaction.emoji)])
     await message.author.add_roles(role)
+
+    for r in message.author.roles:
+      if r.name in roles.values() and r.name != roles[str(reaction.emoji)]:
+        await message.author.remove_roles(r)
+
     await message.channel.send(f'{message.author.mention} に {role.name} を付与しました')
     await message.clear_reactions()
 
