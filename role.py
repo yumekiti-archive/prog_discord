@@ -7,7 +7,7 @@ roles = {
   '4️⃣': '4_year',
 }
 
-async def on_member_join(client, message):
+async def join(client, message):
   for emoji in roles.keys():
     await message.add_reaction(emoji)
 

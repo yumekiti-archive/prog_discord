@@ -20,6 +20,10 @@ async def on_message(message):
     return
 
   if message.content.startswith('/join'):
-    await role.on_member_join(client, message)
+    await role.join(client, message)
+
+@client.event
+async def on_member_join(member):
+  await role.join(client, member)
 
 client.run(os.getenv('TOKEN'))
