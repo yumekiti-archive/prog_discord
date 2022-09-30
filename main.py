@@ -1,8 +1,7 @@
-# This example requires the 'message_content' intent.
-
 import discord
 import role
 
+import os
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -20,7 +19,7 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  if message.content.startswith('/role'):
+  if message.content.startswith('/join'):
     await role.main(client, message)
 
 client.run(os.getenv('TOKEN'))

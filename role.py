@@ -8,12 +8,11 @@ roles = {
 }
 
 async def main(client, message):
-  msg = await message.channel.send('リアクションを付けてください')
-  for emoji in roles:
-    await msg.add_reaction(emoji)
+  for emoji in roles.keys():
+    await message.add_reaction(emoji)
 
   def check(reaction, user):
-    return user == message.author and str(reaction.emoji) in roles
+    return user == message.author and str(reaction.emoji) in roles.keys()
 
   try:
     reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
@@ -22,7 +21,8 @@ async def main(client, message):
   else:
     role = discord.utils.get(message.guild.roles, name=roles[str(reaction.emoji)])
     await message.author.add_roles(role)
-    await message.channel.send(f'{user.name}に{role.name}を付与しました')
+    await message.channel.send(f'{message.author.mention} に {role.name} を付与しました')
+    await message.clear_reactions()
 
 if __name__ == '__main__':
   main()
