@@ -7,9 +7,10 @@ services:
     restart: always
     volumes:
       - ./src:/app
+      - ./requirements.txt:/tmp/requirements.txt
     working_dir: /app
     command: >
       sh -c "
-        python3 -m pip install -r requirements.txt &&
+        python3 -m pip install -r /tmp/requirements.txt &&
         python3 main.py
       "

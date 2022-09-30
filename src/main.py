@@ -1,29 +1,19 @@
 import discord
+from discord.ext import commands
 import role
 
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
-intents = discord.Intents.default()
-intents.message_content = True
+bot = commands.Bot(command_prefix='/', intents=discord.Intents.all())
 
-client = discord.Client(intents=intents)
-
-@client.event
+@bot.event
 async def on_ready():
-  print(f'We have logged in as {client.user}')
+  print(f'{bot.user} has connected to Discord!')
 
-@client.event
-async def on_message(message):
-  if message.author == client.user:
-    return
+@bot.command()
+async def join(ctx):
+  await role.join(ctx)
 
-  if message.content.startswith('/join'):
-    await role.main(client, message)
-
-@client.event
-async def on_member_join(member):
-  await role.main(client, member)
-
-client.run(os.getenv('TOKEN'))
+bot.run(os.getenv('TOKEN'))
