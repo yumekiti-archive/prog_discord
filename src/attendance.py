@@ -25,6 +25,6 @@ async def main(ctx, now, body, classroom, student):
       await ctx.send(f'{student.get("name")}さんが出席しました。')
     json.dump(data, f, indent=2)
 
-async def delete():
+def delete():
   if os.path.exists('tmp.json'):
     os.remove('tmp.json')

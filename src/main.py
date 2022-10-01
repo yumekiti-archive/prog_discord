@@ -24,7 +24,7 @@ async def attend(ctx):
   role_names = [role.name for role in ctx.author.roles]
   name = ctx.author.name
   if len(ctx.message.content.split()) > 1:
-    body = { "name": name, "contents": ctx.message.content.split()[1] }
+    body = { "name": name, "content": ctx.message.content.split()[1] }
   else: body = []
   await attendance.main(
     ctx,

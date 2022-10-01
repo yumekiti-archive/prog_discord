@@ -4,14 +4,9 @@ import os
 import shutil
 import json
 
-def init(fileName):
-  shutil.copy('report.xlsx', fileName)
-
-def main():
-  fileName = f'output/{datetime.now().strftime("%Y_%m")}.xlsx'
-
+def main(fileName):
   if not os.path.exists(fileName):
-    init(fileName)
+    shutil.copy('report.xlsx', fileName)
 
   book = openpyxl.load_workbook(fileName)
   sheet = book.active
@@ -26,8 +21,11 @@ def main():
 
   with open('tmp.json', 'r') as f:
     data = json.load(f)
+
+    shutil.copy('tmp.json', f'output/{datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}.json')
+
     sheet.cell(row=row, column=1).value = data.get('day')
-    sheet.cell(row=row, column=3).value = data.get('body')
+    sheet.cell(row=row, column=3).value = data.get('body')[0].get('content')
     sheet.cell(row=row, column=11).value = data.get('classroom')
     sheet.cell(row=row, column=14).value = len(data.get('students'))
 

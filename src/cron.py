@@ -1,8 +1,13 @@
 import attendance
-import asyncio
+import report
+import os
+from datetime import datetime
 
-async def main():
-  await attendance.delete()
+arg = os.sys.argv[1]
 
-if __name__ == '__main__':
-  asyncio.run(main())
+if arg == 'delete':
+  attendance.delete()
+
+if arg == 'report':
+  fileName = f'output/{datetime.now().strftime("%Y_%m")}.xlsx'
+  report.main(fileName)
