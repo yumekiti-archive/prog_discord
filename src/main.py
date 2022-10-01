@@ -27,11 +27,11 @@ async def attend(ctx):
     body = { "name": name, "contents": ctx.message.content.split()[1] }
   else: body = []
   await attendance.main(
+    ctx,
     datetime.now(),
     body,
     "2302",
     { 'name': name, 'roles': role_names }
   )
-  await ctx.send(f'{name}さんの出席を記録しました。')
 
 bot.run(os.getenv('TOKEN'))

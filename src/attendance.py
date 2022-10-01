@@ -1,11 +1,11 @@
 import os
 import json
 
-async def main(now, body, classroom, student):
+async def main(ctx, now, body, classroom, student):
   data = {
     'day': '{0:%d}'.format(now),
     "classroom": classroom,
-    "body": "",
+    "body": [],
     "students": [],
   }
 
@@ -16,12 +16,13 @@ async def main(now, body, classroom, student):
   with open('tmp.json', 'r') as f:
     data = json.load(f)
 
-  data['students'].append(student)
-
   with open('tmp.json', 'w') as f:
     if body != []:
       data['body'].append(body)
-    data['students'] = list({v['name']:v for v in data['students']}.values())
+      await ctx.send(f'{student.get("name")}さんが活動内容を記入しました。')
+    if student not in data['students']:
+      data['students'].append(student)
+      await ctx.send(f'{student.get("name")}さんが出席しました。')
     json.dump(data, f, indent=2)
 
 async def delete():
