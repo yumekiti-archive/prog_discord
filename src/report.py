@@ -7,7 +7,7 @@ import json
 def init(fileName):
   shutil.copy('report.xlsx', fileName)
 
-def add_to_activity_report():
+def main():
   fileName = f'output/{datetime.now().strftime("%Y_%m")}.xlsx'
 
   if not os.path.exists(fileName):
@@ -32,6 +32,3 @@ def add_to_activity_report():
     sheet.cell(row=row, column=14).value = len(data.get('students'))
 
   book.save(fileName)
-
-if __name__ == '__main__':
-  add_to_activity_report()

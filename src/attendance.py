@@ -1,17 +1,12 @@
 import os
 import json
-from datetime import datetime
 
-async def add():
+async def main(now, body, classroom, student):
   data = {
-    'day': '{0:%d}'.format(datetime.now()),
-    "classroom": "2200",
-    "body": "This is a test message",
+    'day': '{0:%d}'.format(now),
+    "classroom": classroom,
+    "body": "",
     "students": [],
-  }
-  student = {
-    "name": "John Doe",
-    "year": "1",
   }
 
   if not os.path.exists('tmp.json'):
@@ -24,12 +19,11 @@ async def add():
   data['students'].append(student)
 
   with open('tmp.json', 'w') as f:
+    if body != []:
+      data['body'].append(body)
+    data['students'] = list({v['name']:v for v in data['students']}.values())
     json.dump(data, f, indent=2)
 
 async def delete():
   if os.path.exists('tmp.json'):
     os.remove('tmp.json')
-
-if __name__ == '__main__':
-  import asyncio
-  asyncio.run(add())

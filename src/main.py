@@ -1,6 +1,9 @@
 import discord
 from discord.ext import commands
-import role
+from datetime import datetime
+
+import role_add
+import attendance
 
 import os
 from dotenv import load_dotenv
@@ -13,7 +16,22 @@ async def on_ready():
   print(f'{bot.user} has connected to Discord!')
 
 @bot.command()
-async def join(ctx):
-  await role.join(ctx)
+async def role(ctx):
+  await role_add.main(ctx)
+
+@bot.command()
+async def attend(ctx):
+  role_names = [role.name for role in ctx.author.roles]
+  name = ctx.author.name
+  if len(ctx.message.content.split()) > 1:
+    body = { "name": name, "contents": ctx.message.content.split()[1] }
+  else: body = []
+  await attendance.main(
+    datetime.now(),
+    body,
+    "2302",
+    { 'name': name, 'roles': role_names }
+  )
+  await ctx.send(f'{name}さんの出席を記録しました。')
 
 bot.run(os.getenv('TOKEN'))

@@ -7,7 +7,7 @@ roles = {
   '4️⃣': '4_year',
 }
 
-async def join(ctx):
+async def main(ctx):
   for emoji in roles.keys():
     await ctx.message.add_reaction(emoji)
 
@@ -17,15 +17,15 @@ async def join(ctx):
   try:
     reaction, user = await ctx.bot.wait_for('reaction_add', timeout=60.0, check=check)
   except asyncio.TimeoutError:
-    await ctx.send('You took too long to respond.')
+    await ctx.send('タイムアウトしました。')
   else:
     role = discord.utils.get(ctx.guild.roles, name=roles[str(reaction.emoji)])
     await ctx.author.add_roles(role)
+
+    await ctx.send(f'{ctx.author.name}さんの学年を{role.name}に設定しました。')
 
     for role in ctx.author.roles:
       if role.name in roles.values() and role.name != roles[str(reaction.emoji)]:
         await ctx.author.remove_roles(role)
 
     await ctx.message.clear_reactions()
-
-    await ctx.send(f'You have been given the {role.name} role.')
