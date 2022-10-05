@@ -1,3 +1,4 @@
+cat << EOF > /lib/systemd/system/discord-bot.service
 import openpyxl
 from datetime import datetime
 import os
@@ -6,8 +7,8 @@ import json
 
 date = os.sys.argv[1]
 if len(date) != 7:
-  print('正しい形式で入力してください')
-  print('例: 2021-01')
+  print('Please enter the correct format')
+  print('Example: 2021-01')
   exit()
 
 def main():
