@@ -24,6 +24,7 @@ def main():
 
       row = 8
       flag = True
+      bodys = []
 
       while flag:
         value = sheet.cell(row=row, column=1).value
@@ -34,7 +35,9 @@ def main():
         data = json.load(f)
 
         sheet.cell(row=row, column=1).value = data.get('day')
-        sheet.cell(row=row, column=3).value = data.get('body')[0].get('content')
+        for body in data.get('body'):
+          bodys.append(body.get('content'))
+        sheet.cell(row=row, column=3).value = max(bodys, key=len)
         sheet.cell(row=row, column=11).value = data.get('classroom')
         sheet.cell(row=row, column=14).value = len(data.get('students'))
 
