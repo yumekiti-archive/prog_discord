@@ -4,27 +4,41 @@ import os
 import shutil
 import json
 
-def main(fileName):
-  if not os.path.exists(fileName):
-    shutil.copy('report.xlsx', fileName)
+date = os.sys.argv[1]
+if len(date) != 7:
+  print('正しい形式で入力してください')
+  print('例: 2021-01')
+  exit()
 
-  book = openpyxl.load_workbook(fileName)
-  sheet = book.active
+def main():
+  for file in os.listdir('output'):
+    if date in file:
+      print(file)
 
-  row = 8
-  flag = True
+      fileName = f'output/{date}.xlsx'
+      if not os.path.exists(fileName):
+        shutil.copy('report.xlsx', fileName)
 
-  while flag:
-    value = sheet.cell(row=row, column=1).value
-    if value == None or value == '日付': flag = False
-    else: row += 1
+      book = openpyxl.load_workbook(fileName)
+      sheet = book.active
 
-  with open('tmp.json', 'r') as f:
-    data = json.load(f)
+      row = 8
+      flag = True
 
-    sheet.cell(row=row, column=1).value = data.get('day')
-    sheet.cell(row=row, column=3).value = data.get('body')[0].get('content')
-    sheet.cell(row=row, column=11).value = data.get('classroom')
-    sheet.cell(row=row, column=14).value = len(data.get('students'))
+      while flag:
+        value = sheet.cell(row=row, column=1).value
+        if value == None or value == '日付': flag = False
+        else: row += 1
 
-  book.save(fileName)
+      with open(f'output/{file}', 'r') as f:
+        data = json.load(f)
+
+        sheet.cell(row=row, column=1).value = data.get('day')
+        sheet.cell(row=row, column=3).value = data.get('body')[0].get('content')
+        sheet.cell(row=row, column=11).value = data.get('classroom')
+        sheet.cell(row=row, column=14).value = len(data.get('students'))
+
+      book.save(fileName)
+
+if __name__ == '__main__':
+  main()
