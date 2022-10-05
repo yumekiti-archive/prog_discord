@@ -1,10 +1,12 @@
 import os
 import json
+from datetime import datetime
+import shutil
 
-async def main(ctx, now, body, classroom, student):
+async def main(ctx, body, student):
   data = {
-    'day': '{0:%d}'.format(now),
-    "classroom": classroom,
+    'day': '{0:%d}'.format(datetime.now()),
+    "classroom": 2302,
     "body": [],
     "students": [],
   }
@@ -25,6 +27,7 @@ async def main(ctx, now, body, classroom, student):
       await ctx.send(f'{student.get("name")}さんが出席しました。')
     json.dump(data, f, indent=2)
 
-def delete():
+async def record():
+  shutil.copy('tmp.json', f'output/{datetime.now().strftime("%Y-%m-%d")}.json')
   if os.path.exists('tmp.json'):
     os.remove('tmp.json')

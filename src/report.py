@@ -22,8 +22,6 @@ def main(fileName):
   with open('tmp.json', 'r') as f:
     data = json.load(f)
 
-    shutil.copy('tmp.json', f'output/{datetime.now().strftime("%Y_%m")}.json')
-
     sheet.cell(row=row, column=1).value = data.get('day')
     sheet.cell(row=row, column=3).value = data.get('body')[0].get('content')
     sheet.cell(row=row, column=11).value = data.get('classroom')

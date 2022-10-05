@@ -2,8 +2,7 @@ import discord
 from discord.ext import commands
 from datetime import datetime
 
-import role_add
-import attendance
+import write
 
 import os
 from dotenv import load_dotenv
@@ -11,27 +10,41 @@ load_dotenv()
 
 bot = commands.Bot(command_prefix='/', intents=discord.Intents.all())
 
+attendance_enojis = ['👍','👎']
+
 @bot.event
 async def on_ready():
   print(f'{bot.user} has connected to Discord!')
 
 @bot.command()
-async def role(ctx):
-  await role_add.main(ctx)
+async def attend(ctx):
+  message = await ctx.send(f'{datetime.now().strftime("%Y/%m/%d")}は活動日です、出席しますか？')
+
+  for emoji in attendance_enojis:
+    await message.add_reaction(emoji)
+
+  today = datetime.now().strftime("%Y/%m/%d")
+  while today == datetime.now().strftime("%Y/%m/%d"):
+    reaction, user = await bot.wait_for('reaction_add')
+    if reaction.emoji == '👍':
+      roles = [role.name for role in user.roles]
+      await write.main(ctx, [], { 'name': user.name, 'roles': roles })
 
 @bot.command()
-async def attend(ctx):
-  role_names = [role.name for role in ctx.author.roles]
-  name = ctx.author.name
+async def report(ctx):
+  roles = [role.name for role in ctx.author.roles]
   if len(ctx.message.content.split()) > 1:
-    body = { "name": name, "content": ctx.message.content.split()[1] }
+    body = { "name": ctx.author.name, "content": ctx.message.content.split()[1] }
   else: body = []
-  await attendance.main(
-    ctx,
-    datetime.now(),
-    body,
-    "2302",
-    { 'name': name, 'roles': role_names }
-  )
+  await write.main(ctx, body, { "name": ctx.author.name, "roles": roles })
 
-bot.run(os.getenv('TOKEN'))
+@bot.command()
+async def record(ctx):
+  await write.record()
+  await ctx.send('本日の活動内容を記録しました。')
+
+@bot.command()
+async def ping(ctx):
+  await ctx.send('pong')
+
+bot.run('MTAyNTIwNTk1MDE0OTMwMDIzNA.GWyT8F.cFmzHlyT34dbhMgY47m8uhyJcdYZbEuRmfHcx0')
