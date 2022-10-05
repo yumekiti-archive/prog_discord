@@ -47,4 +47,4 @@ async def record(ctx):
 async def ping(ctx):
   await ctx.send('pong')
 
-bot.run('MTAyNTIwNTk1MDE0OTMwMDIzNA.GWyT8F.cFmzHlyT34dbhMgY47m8uhyJcdYZbEuRmfHcx0')
+bot.run(os.getenv('TOKEN'))
