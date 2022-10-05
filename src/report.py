@@ -1,4 +1,3 @@
-cat << EOF > /lib/systemd/system/discord-bot.service
 import openpyxl
 from datetime import datetime
 import os
