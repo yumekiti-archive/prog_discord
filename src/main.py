@@ -5,6 +5,7 @@ from datetime import datetime
 import write
 
 import os
+import random
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -46,5 +47,9 @@ async def record(ctx):
 @bot.command()
 async def ping(ctx):
   await ctx.send('pong')
+
+@bot.command()
+async def clear(ctx):
+  await ctx.channel.purge()
 
 bot.run(os.getenv('TOKEN'))
