@@ -27,7 +27,7 @@ async def attend(ctx):
   today = datetime.now().strftime("%Y/%m/%d")
   while today == datetime.now().strftime("%Y/%m/%d"):
     reaction, user = await bot.wait_for('reaction_add')
-    if reaction.emoji == '👍':
+    if reaction.emoji == '👍' and user != bot.user:
       roles = [role.name for role in user.roles]
       await write.main(ctx, [], { 'name': user.name, 'roles': roles })
 
