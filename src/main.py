@@ -48,8 +48,4 @@ async def record(ctx):
 async def ping(ctx):
   await ctx.send('pong')
 
-@bot.command()
-async def clear(ctx):
-  await ctx.channel.purge()
-
 bot.run(os.getenv('TOKEN'))
