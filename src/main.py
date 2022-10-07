@@ -19,7 +19,7 @@ async def on_ready():
 
 @bot.command()
 async def attend(ctx):
-  message = await ctx.send(f'{datetime.now().strftime("%Y/%m/%d")}は活動日です、出席しますか？')
+  message = await ctx.send(f'{datetime.now().strftime("%Y/%m/%d")}です、出席しますか？')
 
   for emoji in attendance_enojis:
     await message.add_reaction(emoji)

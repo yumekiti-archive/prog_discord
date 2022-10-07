@@ -28,6 +28,6 @@ async def main(ctx, body, student):
     json.dump(data, f, indent=2)
 
 async def record():
-  shutil.copy('tmp.json', f'output/{datetime.now().strftime("%Y-%m-%d_%H-%M")}.json')
+  shutil.copy('tmp.json', f'output/{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.json')
   if os.path.exists('tmp.json'):
     os.remove('tmp.json')
