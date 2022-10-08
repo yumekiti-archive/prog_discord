@@ -4,10 +4,15 @@ import os
 import shutil
 import json
 
-date = os.sys.argv[1]
+try:
+  date = os.sys.argv[1]
+except:
+  print('Please provide date as argument')
+  print('Example: 2022-10')
+  exit()
 if len(date) != 7:
   print('Please enter the correct format')
-  print('Example: 2021-01')
+  print('Example: 2022-10')
   exit()
 
 def main():
