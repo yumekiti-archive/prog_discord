@@ -22,4 +22,7 @@ logs:
 app:
 	$(dc) exec app /bin/sh
 
-.PHONY:	setup up down restart reup rm logs app db
+backup:
+	cp -r ./src/output /backup
+
+.PHONY:	up down restart reup rm logs app backup
