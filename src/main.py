@@ -16,7 +16,7 @@ class MyBot(commands.Bot):
     await self.tree.sync()
 
 
-bot = commands.Bot(command_prefix='/', intents=discord.Intents.all())
+bot = MyBot(command_prefix='/', intents=discord.Intents.all())
 
 attendance_enojis = ['👍','👎']
 
