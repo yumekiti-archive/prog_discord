@@ -9,7 +9,14 @@ import random
 from dotenv import load_dotenv
 load_dotenv()
 
-bot = commands.Bot(command_prefix='/', intents=discord.Intents.all())
+
+class MyBot(commands.Bot):
+  async def setup_hook(self):
+    await self.load_extension('task')
+    await self.tree.sync()
+
+
+bot = MyBot(command_prefix='/', intents=discord.Intents.all())
 
 attendance_enojis = ['👍','👎']
 
@@ -48,4 +55,5 @@ async def record(ctx):
 async def ping(ctx):
   await ctx.send('pong')
 
+if __name__ == '__main__':
 bot.run(os.getenv('TOKEN'))

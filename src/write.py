@@ -28,6 +28,18 @@ async def main(ctx, body, student):
     json.dump(data, f, indent=2)
 
 async def record():
-  shutil.copy('tmp.json', f'output/{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.json')
-  if os.path.exists('tmp.json'):
+  if not os.path.exists('tmp.json'):
+    return
+  with open('tmp.json') as f:
+    data = json.load(f)
+  body = data['body']
+  reporteds = [x['name'] for x in body]
+  for student in data['students']:
+    name = student['name']
+    if name in reporteds:
+      return
+    body.append({'name': name, 'content': '自習'})
+
+  with open(f'output/{datetime.now():%Y-%m-%d_%H-%M-%S}.json', 'w') as f:
+    json.dump(data, f, indent=2)
     os.remove('tmp.json')
