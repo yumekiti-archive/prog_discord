@@ -4,10 +4,12 @@ from discord.ext import commands, tasks
 
 import main
 import write
+import os
 
 prog_channel_id = 1026376855969865840
 attend_time = time(hour=17)
 recode_time = time(hour=20)
+report_day = '01'
 attendance_enojis = ['👍', '👎']
 
 
@@ -49,6 +51,11 @@ class Task(commands.Cog):
     await write.record()
     await self.prog_channel.send("本日の活動内容を記録しました。")
 
+  @tasks.loop(hours=24)
+  async def record(self):
+    if f'{datetime.now():%d}' != f'{report_day}':
+      return
+    os.system(f'/usr/bin/python3 ./src/report.py {datetime.now():%Y-%m}')
 
 async def setup(bot: commands.Bot):
   await bot.add_cog(Task(bot))
