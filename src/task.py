@@ -32,7 +32,7 @@ class Task(commands.Cog):
   async def attend(self):
     if f'{datetime.now():%H%M}' != f'{attend_time:%H%M}':
       return
-    message = await self.prog_channel.send(f'{datetime.now().strftime("%Y/%m/%d")}です、出席しますか？')
+    message = await self.prog_channel.send(f'<@&{prog_channel_id}>{datetime.now().strftime("%Y/%m/%d")}です、出席しますか？')
 
     for emoji in attendance_enojis:
       await message.add_reaction(emoji)
