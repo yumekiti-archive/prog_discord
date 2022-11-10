@@ -40,6 +40,6 @@ async def record():
       return
     body.append({'name': name, 'content': '自習'})
 
-  with open(f'output/{datetime.now():%Y-%m-%d_%H-%M-%S}.json', 'w') as f:
+  with open(f'output/{datetime.now():%Y-%m-%d}.json', 'w') as f:
     json.dump(data, f, indent=2)
     os.remove('tmp.json')
