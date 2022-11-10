@@ -6,7 +6,7 @@ import main
 import write
 import os
 
-prog_channel_id = 1026376855969865840
+prog_channel_id = 1026379495478927410
 attend_time = time(hour=17)
 recode_time = time(hour=20)
 report_day = '01'
