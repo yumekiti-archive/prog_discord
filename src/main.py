@@ -23,20 +23,18 @@ async def on_ready():
   print(f'{bot.user} has connected to Discord!')
 
 @bot.command()
-async def attend(self):
-  if f'{datetime.now():%H%M}' != f'{attend_time:%H%M}':
-    return
-  message = await self.prog_channel.send(f'<@&{1026379495478927410}>{datetime.now().strftime("%Y/%m/%d")}です、出席しますか？')
+async def attend(ctx):
+  message = await ctx.send(f'<@&{1026379495478927410}>{datetime.now().strftime("%Y/%m/%d")}です、出席しますか？')
 
   for emoji in attendance_enojis:
     await message.add_reaction(emoji)
 
   today = datetime.now().strftime("%Y/%m/%d")
   while today == datetime.now().strftime("%Y/%m/%d"):
-    reaction, user = await self.bot.wait_for('reaction_add')
-    if reaction.emoji == '👍' and not user.bot:
+    reaction, user = await bot.wait_for('reaction_add')
+    if reaction.emoji == '👍' and user != bot.user:
       roles = [role.name for role in user.roles]
-      await write.main(self.prog_channel, [], {'name': user.name, 'roles': roles})
+      await write.main(ctx, [], { 'name': user.name, 'roles': roles })
 
 @bot.command()
 async def report(ctx):
