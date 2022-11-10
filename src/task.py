@@ -6,7 +6,7 @@ import main
 import write
 import os
 
-prog_channel_id = 1026379495478927410
+prog_channel_id = 1026376855969865840
 attend_time = time(hour=17)
 recode_time = time(hour=20)
 report_day = '01'
@@ -32,7 +32,7 @@ class Task(commands.Cog):
   async def attend(self):
     if f'{datetime.now():%H%M}' != f'{attend_time:%H%M}':
       return
-    message = await self.prog_channel.send(f'<@&{prog_channel_id}>{datetime.now().strftime("%Y/%m/%d")}です、出席しますか？')
+    message = await self.prog_channel.send(f'<@&{1026379495478927410}>{datetime.now().strftime("%Y/%m/%d")}です、出席しますか？')
 
     for emoji in attendance_enojis:
       await message.add_reaction(emoji)
